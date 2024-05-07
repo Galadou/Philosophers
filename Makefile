@@ -7,7 +7,8 @@ NAME		= philo
 SRC			=	main.c\
 				ft_atoi.c\
 				define_struct.c\
-				ultimate_free.c
+				ultimate_free.c\
+				routine.c
 
 
 OBJS=$(SRC:.c=.o)

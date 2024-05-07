@@ -34,7 +34,7 @@ void	free_linked_lst(t_philo *list, t_arg *arg)
 void	free_lst_and_exit(t_philo *list)
 {
 	free_lst(list);
-	exit(1);
+	exit(1); //interdit
 }
 
 void	free_philo(t_philo *list, t_arg *arg)

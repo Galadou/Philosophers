@@ -1,8 +1,11 @@
 #include "philo.h"
 
-void	define_arg(t_arg *arg, int argc, char **argv)
+t_arg	*define_arg(int argc, char **argv)
 {
-	arg->time_start = gettimeofday(NULL, NULL);
+	t_arg	*arg;
+
+	arg = malloc(sizeof(t_arg));
+	gettimeofday(&arg->time_start, NULL);
 	arg->nb_philo = ft_atoi(argv[1]);
 	arg->time_death = ft_atoi(argv[2]);
 	arg->time_eat = ft_atoi(argv[3]);
@@ -17,9 +20,9 @@ void	define_arg(t_arg *arg, int argc, char **argv)
 	arg->is_someone_died = 0;
 	arg->mutex_s_died = malloc(sizeof(pthread_mutex_t));
 	arg->mutex_printf = malloc(sizeof(pthread_mutex_t));
-
 	pthread_mutex_init(arg->mutex_s_died, NULL);
 	pthread_mutex_init(arg->mutex_printf, NULL);
+	return (arg);
 }
 
 static t_philo	*ft_lstnew_philo(int id, t_arg *arg)
@@ -28,12 +31,14 @@ static t_philo	*ft_lstnew_philo(int id, t_arg *arg)
 
 	head = malloc(sizeof(t_philo));
 	if (!head)
-		exit(1);
+		exit(1);//interdit d'exit
+	head->arg = arg;
 	head->id = id;
 	head->fork = true;
 	head->mutex_fork = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(head->mutex_fork, NULL);
 	head->time_last_eat = arg->time_start;
+	gettimeofday(&head->time_now, NULL);
 	head->time_eating = 0;
 	head->time_sleep = 0;
 	head->nb_eat_time = 0;
