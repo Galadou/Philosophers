@@ -43,3 +43,9 @@ int	main(int argc, char **argv)
 	free_philo(philo, arg);
 	free(arg);
 }
+
+//nb philo
+//t_die
+//t_eat
+//t_sleep
+//nb philo eat
