@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:40:45 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/01 17:25:42 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/02 15:04:30 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ typedef struct s_philo
 	bool			fork;
 	pthread_mutex_t	*mutex_fork;
 	struct timeval	time_last_eat;
+	struct timeval	time_start_eat;
 	struct timeval	time_start_sleep;
 	struct timeval	time_now;
 	int				time_eating;
 	int				time_sleep;
-	int				nb_eat_time;
+	int				nb_eat;
 
 	t_arg			*arg;
 	struct s_philo	*next;
@@ -62,6 +63,10 @@ void	free_philo(t_philo *list, t_arg *arg);
 void	free_linked_lst(t_philo *list, t_arg *arg);
 
 void	*routine_main(void *philo);
+bool	ft_am_i_dead(t_philo *philo);
+
+//add to libft ?
+long	abso(long c);
 
 
 

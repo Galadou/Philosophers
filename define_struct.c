@@ -41,7 +41,7 @@ static t_philo	*ft_lstnew_philo(int id, t_arg *arg)
 	gettimeofday(&head->time_now, NULL);
 	head->time_eating = 0;
 	head->time_sleep = 0;
-	head->nb_eat_time = 0;
+	head->nb_eat = 0;
 	head->next = NULL;
 	head->time_start_sleep = arg->time_start;
 	return (head);

@@ -8,7 +8,8 @@ SRC			=	main.c\
 				ft_atoi.c\
 				define_struct.c\
 				ultimate_free.c\
-				routine.c
+				routine.c \
+				ft_philo_dead.c
 
 
 OBJS=$(SRC:.c=.o)
