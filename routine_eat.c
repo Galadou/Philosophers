@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:45:26 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 11:00:09 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/21 13:43:18 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	ft_check_dead(t_philo *philo)
 {
-	if (ft_am_i_dead(philo) || philo->arg->is_someone_died)
+	if (ft_am_i_dead(philo) || philo->arg->is_someone_died
+		|| (philo->arg->is_nb_eat && philo->arg->nb_finish_eat
+			== philo->arg->nb_philo))
 	{
 		pthread_mutex_unlock(philo->mutex_fork);
 		if (philo->arg->nb_philo > 1)

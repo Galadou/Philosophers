@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:27 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 10:55:01 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/21 13:44:33 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ int	main(int argc, char **argv)
 	if (!philo)
 		return (free_arg(arg));
 	buffer = philo;
-	// int i = 0;
-	// while (i != 5)
-	// {
-	// 	printf("%d = id, %d = time to eat, %d = time to sleep, %d = fourchette\n", philo->id, philo->time_eating, philo->time_sleep, philo->fork);
-	// 	philo = philo->next;
-	// 	i++;
-	// }
-	//philo = buffer;
 	while (philo)
 	{
 		pthread_create(&(philo->thread), NULL, routine_main, philo);
@@ -73,9 +65,3 @@ int	main(int argc, char **argv)
 	}
 	ft_thread_join(arg, philo, buffer);
 }
-
-//nb philo
-//t_die
-//t_eat
-//t_sleep
-//nb philo eat

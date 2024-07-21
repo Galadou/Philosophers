@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 06:00:25 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 10:54:31 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/21 13:45:19 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*free_lst(t_philo *list)
 {
-	t_philo *buffer;
+	t_philo	*buffer;
 
 	buffer = list->next;
 	free(list);
@@ -29,7 +29,7 @@ void	*free_lst(t_philo *list)
 
 void	free_linked_lst(t_philo *list, t_arg *arg)
 {
-	t_philo *buffer;
+	t_philo	*buffer;
 
 	if (list->arg->nb_philo == 1)
 	{
@@ -51,14 +51,14 @@ void	free_linked_lst(t_philo *list, t_arg *arg)
 
 void	free_philo(t_philo *list, t_arg *arg)
 {
-	t_philo *buffer;
+	t_philo	*buffer;
 
 	buffer = list;
 	while (buffer->id != arg->nb_philo)
 	{
 		pthread_mutex_destroy(buffer->mutex_fork);
 		free(buffer->mutex_fork);
-		if (buffer->arg->nb_philo == 1) 
+		if (buffer->arg->nb_philo == 1)
 		{
 			free_linked_lst(list, arg);
 			return ;
@@ -85,4 +85,3 @@ int	free_arg(t_arg *arg)
 	}
 	return (0);
 }
-
