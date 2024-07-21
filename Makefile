@@ -9,7 +9,8 @@ SRC			=	main.c\
 				define_struct.c\
 				ultimate_free.c\
 				routine.c \
-				ft_philo_dead.c
+				ft_philo_dead.c \
+				routine_eat.c
 
 
 OBJS=$(SRC:.c=.o)

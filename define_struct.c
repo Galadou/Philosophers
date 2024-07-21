@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   define_struct.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/21 07:07:17 by gmersch           #+#    #+#             */
+/*   Updated: 2024/07/21 11:00:27 by gmersch          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 t_arg	*define_arg(int argc, char **argv)
@@ -18,8 +30,11 @@ t_arg	*define_arg(int argc, char **argv)
 	else
 		arg->is_nb_eat = false;
 	arg->is_someone_died = 0;
+	arg->nb_finish_eat = 0;
 	arg->mutex_s_died = malloc(sizeof(pthread_mutex_t));
 	arg->mutex_printf = malloc(sizeof(pthread_mutex_t));
+	arg->mutex_finish_eat = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(arg->mutex_finish_eat, NULL);
 	pthread_mutex_init(arg->mutex_s_died, NULL);
 	pthread_mutex_init(arg->mutex_printf, NULL);
 	return (arg);
@@ -27,15 +42,19 @@ t_arg	*define_arg(int argc, char **argv)
 
 static t_philo	*ft_lstnew_philo(int id, t_arg *arg)
 {
-	t_philo *head;
+	t_philo	*head;
 
 	head = malloc(sizeof(t_philo));
 	if (!head)
-		exit(1);//interdit d'exit
+		return (NULL);
 	head->arg = arg;
 	head->id = id;
-	head->fork = true;
 	head->mutex_fork = malloc(sizeof(pthread_mutex_t));
+	if (!head->mutex_fork)
+	{
+		free(head);
+		return (NULL);
+	}
 	pthread_mutex_init(head->mutex_fork, NULL);
 	head->time_last_eat = arg->time_start;
 	gettimeofday(&head->time_now, NULL);
@@ -58,15 +77,17 @@ t_philo	*define_philo(t_arg *arg)
 	{
 		head = ft_lstnew_philo(id, arg);
 		if (head == NULL)
-			free_lst(head);
+			return (free_lst(head));
 	}
+	if (arg->nb_philo == 1)
+		return (head);
 	buffer = head;
 	id++;
 	while (id < arg->nb_philo + 1)
 	{
 		buffer->next = ft_lstnew_philo(id, arg);
 		if (buffer->next == NULL)
-			free_lst_and_exit(head);
+			return (free_lst(head));
 		id++;
 		buffer = buffer->next;
 	}
