@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:45:26 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 13:43:18 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 12:44:44 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	ft_check_dead(t_philo *philo)
 		|| (philo->arg->is_nb_eat && philo->arg->nb_finish_eat
 			== philo->arg->nb_philo))
 	{
-		pthread_mutex_unlock(philo->mutex_fork);
+		pthread_mutex_unlock(&philo->mutex_fork);
 		if (philo->arg->nb_philo > 1)
-			pthread_mutex_unlock(philo->next->mutex_fork);
+			pthread_mutex_unlock(&philo->next->mutex_fork);
 		return (1);
 	}
 	return (0);
@@ -50,8 +50,8 @@ static void	routine_take_fork(t_philo *philo)
 		philo->arg->nb_finish_eat++;
 		pthread_mutex_unlock(philo->arg->mutex_finish_eat);
 	}
-	pthread_mutex_unlock(philo->mutex_fork);
-	pthread_mutex_unlock(philo->next->mutex_fork);
+	pthread_mutex_unlock(&philo->mutex_fork);
+	pthread_mutex_unlock(&philo->next->mutex_fork);
 }
 
 static void	routine_exec(t_philo *philo)
@@ -85,19 +85,19 @@ void	routine_eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->mutex_fork);
+		pthread_mutex_lock(&philo->mutex_fork);
 		if (ft_check_philo(philo))
 			return ;
-		pthread_mutex_lock(philo->next->mutex_fork);
+		pthread_mutex_lock(&philo->next->mutex_fork);
 		if (ft_check_philo(philo))
 			return ;
 	}
 	else
 	{
-		pthread_mutex_lock(philo->next->mutex_fork);
+		pthread_mutex_lock(&philo->next->mutex_fork);
 		if (ft_check_philo(philo))
 			return ;
-		pthread_mutex_lock(philo->mutex_fork);
+		pthread_mutex_lock(&philo->mutex_fork);
 		if (ft_check_philo(philo))
 			return ;
 	}

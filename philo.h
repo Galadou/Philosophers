@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:40:45 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 10:00:47 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 12:45:21 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	pthread_mutex_t	*mutex_fork;
+	pthread_mutex_t	mutex_fork;
 	struct timeval	time_last_eat;
 	struct timeval	time_start_eat;
 	struct timeval	time_start_sleep;
