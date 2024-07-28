@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 06:00:25 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 13:26:41 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 18:25:01 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	free_philo(t_philo *list, t_arg *arg)
 	buffer = list;
 	while (buffer->id != arg->nb_philo)
 	{
-		pthread_mutex_destroy(&buffer->mutex_fork);
-		// free(buffer->mutex_fork);
+		pthread_mutex_destroy(&buffer->mutex_l_fork);
 		if (buffer->arg->nb_philo == 1)
 		{
 			free_linked_lst(list, arg);
@@ -65,8 +64,7 @@ void	free_philo(t_philo *list, t_arg *arg)
 		}
 		buffer = buffer->next;
 	}
-	pthread_mutex_destroy(&buffer->mutex_fork);
-	// free(buffer->mutex_fork);
+	pthread_mutex_destroy(&buffer->mutex_l_fork);
 	buffer = buffer->next;
 	free_linked_lst(list, arg);
 }
@@ -78,9 +76,6 @@ int	free_arg(t_arg *arg)
 		pthread_mutex_destroy(&arg->mutex_finish_eat);
 		pthread_mutex_destroy(&arg->mutex_printf);
 		pthread_mutex_destroy(&arg->mutex_s_died);
-		//free(&arg->mutex_finish_eat);
-		//free(arg->mutex_printf);
-		//free(arg->mutex_s_died);
 		free(arg);
 	}
 	return (0);

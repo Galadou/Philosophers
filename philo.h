@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:40:45 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 13:26:02 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 17:44:36 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	pthread_mutex_t	mutex_fork;
+	pthread_mutex_t	mutex_l_fork;
+	pthread_mutex_t	*mutex_r_fork;
 	struct timeval	time_last_eat;
 	struct timeval	time_start_eat;
 	struct timeval	time_start_sleep;
@@ -67,6 +68,6 @@ int			free_arg(t_arg *arg);
 void		*routine_main(void *philo);
 void		routine_eat(t_philo *philo);
 bool		ft_am_i_dead(t_philo *philo);
-int			ft_check_dead(t_philo *philo);
+int			ft_check_dead(t_philo *philo, bool l, bool r);
 
 #endif

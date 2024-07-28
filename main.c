@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:27 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 12:18:05 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 14:23:04 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	ft_thread_join(t_arg *arg, t_philo *philo, t_philo *buffer)
 	}
 	pthread_join(philo->thread, NULL);
 	philo = buffer;
-	//pthread_mutex_destroy(arg->mutex_printf);
-	//pthread_mutex_destroy(arg->mutex_s_died);
 	free_philo(philo, arg);
 	free_arg(arg);
 }
@@ -54,9 +52,12 @@ int	main(int argc, char **argv)
 	buffer = philo;
 	while (philo)
 	{
-		//PROTECTION
-		//change fork pour ne pas communique
-		pthread_create(&(philo->thread), NULL, routine_main, philo);
+		if (pthread_create(&(philo->thread), NULL, routine_main, philo) != 0)
+		{
+			free_philo(philo, arg);
+			free_arg(arg);
+			return (0);
+		}
 		if (philo->arg->nb_philo > 1)
 			philo = philo->next;
 		else
