@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:40:45 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 11:00:21 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 10:00:47 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ typedef struct s_philo
 
 }	t_philo;
 
-int		ft_atoi(const char *nptr);
-t_arg	*define_arg(int argc, char **argv);
-t_philo	*define_philo(t_arg *arg);
-void	*free_lst(t_philo *list);
-void	free_philo(t_philo *list, t_arg *arg);
-void	free_linked_lst(t_philo *list, t_arg *arg);
-int		free_arg(t_arg *arg);
+int			ft_parsing(int argc, char **argv);
+long int	ft_atoi(const char *nptr);
+t_arg		*define_arg(int argc, char **argv);
+t_philo		*define_philo(t_arg *arg);
+void		*free_lst(t_philo *list);
+void		free_philo(t_philo *list, t_arg *arg);
+void		free_linked_lst(t_philo *list, t_arg *arg);
+int			free_arg(t_arg *arg);
 
-void	*routine_main(void *philo);
-void	routine_eat(t_philo *philo);
-bool	ft_am_i_dead(t_philo *philo);
-bool	ft_is_all_eat(t_philo *philo);
-int		ft_check_dead(t_philo *philo);
+void		*routine_main(void *philo);
+void		routine_eat(t_philo *philo);
+bool		ft_am_i_dead(t_philo *philo);
+int			ft_check_dead(t_philo *philo);
 
 #endif

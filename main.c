@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:27 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 13:44:33 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 09:59:59 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 	t_philo	*philo;
 	t_philo	*buffer;
 
-	if (argc < 5 || argc > 6)
+	if (ft_parsing(argc, argv))
 		return (0);
 	arg = define_arg(argc, argv);
 	if (!arg)

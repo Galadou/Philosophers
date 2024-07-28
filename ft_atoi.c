@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:22 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/21 07:07:23 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 11:43:53 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static int	ft_isdigit(int c)
 		return (0);
 }
 
-int	ft_atoi(const char *nptr)
+long int	ft_atoi(const char *nptr)
 {
-	int	nb;
-	int	negatif;
+	long int	nb;
+	int			negatif;
 
 	nb = 0;
 	negatif = 1;
