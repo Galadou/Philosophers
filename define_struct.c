@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:17 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 12:47:37 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 13:25:56 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ t_arg	*define_arg(int argc, char **argv)
 		arg->is_nb_eat = false;
 	arg->is_someone_died = 0;
 	arg->nb_finish_eat = 0;
-	arg->mutex_s_died = malloc(sizeof(pthread_mutex_t));
-	arg->mutex_printf = malloc(sizeof(pthread_mutex_t));
-	arg->mutex_finish_eat = malloc(sizeof(pthread_mutex_t));
+	//arg->mutex_s_died = malloc(sizeof(pthread_mutex_t));
+	//arg->mutex_printf = malloc(sizeof(pthread_mutex_t));
+	//arg->mutex_finish_eat = malloc(sizeof(pthread_mutex_t));
 	//verif malloc
-	pthread_mutex_init(arg->mutex_finish_eat, NULL);
-	pthread_mutex_init(arg->mutex_s_died, NULL);
-	pthread_mutex_init(arg->mutex_printf, NULL);
+	pthread_mutex_init(&arg->mutex_finish_eat, NULL);
+	pthread_mutex_init(&arg->mutex_s_died, NULL);
+	pthread_mutex_init(&arg->mutex_printf, NULL);
 	return (arg);
 }
 

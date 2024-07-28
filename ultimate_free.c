@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 06:00:25 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 12:43:30 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 13:26:41 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	free_arg(t_arg *arg)
 {
 	if (arg)
 	{
-		pthread_mutex_destroy(arg->mutex_finish_eat);
-		pthread_mutex_destroy(arg->mutex_printf);
-		pthread_mutex_destroy(arg->mutex_s_died);
-		free(arg->mutex_finish_eat);
-		free(arg->mutex_printf);
-		free(arg->mutex_s_died);
+		pthread_mutex_destroy(&arg->mutex_finish_eat);
+		pthread_mutex_destroy(&arg->mutex_printf);
+		pthread_mutex_destroy(&arg->mutex_s_died);
+		//free(&arg->mutex_finish_eat);
+		//free(arg->mutex_printf);
+		//free(arg->mutex_s_died);
 		free(arg);
 	}
 	return (0);

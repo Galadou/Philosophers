@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:40:45 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 12:45:21 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 13:26:02 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ typedef struct s_arg
 	int				nb_eat;
 	int				nb_finish_eat;
 	int				is_someone_died;
-	pthread_mutex_t	*mutex_finish_eat;
-	pthread_mutex_t	*mutex_s_died;
-	pthread_mutex_t	*mutex_printf;
+	pthread_mutex_t	mutex_finish_eat;
+	pthread_mutex_t	mutex_s_died;
+	pthread_mutex_t	mutex_printf;
 
 }	t_arg;
 
