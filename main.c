@@ -6,15 +6,26 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:27 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 14:23:04 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:11:07 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_thread_join(t_arg *arg, t_philo *philo, t_philo *buffer)
+static int	ft_create_thread(t_philo *philo, t_arg *arg)
 {
-	philo = buffer;
+	if (pthread_create(&(philo->thread), NULL, routine_main, philo) != 0)
+	{
+		free_philo(philo, arg);
+		free_arg(arg);
+		return (1);
+	}
+	return (0);
+}
+
+static int	ft_thread_join(t_arg *arg, t_philo *philo, t_philo *head)
+{
+	philo = head;
 	while (philo->id < arg->nb_philo)
 	{
 		if (pthread_join(philo->thread, NULL) != 0)
@@ -26,20 +37,21 @@ static void	ft_thread_join(t_arg *arg, t_philo *philo, t_philo *buffer)
 			philo = philo->next;
 		else
 			break ;
-		if (philo == buffer)
+		if (philo == head)
 			break ;
 	}
 	pthread_join(philo->thread, NULL);
-	philo = buffer;
+	philo = head;
 	free_philo(philo, arg);
 	free_arg(arg);
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_arg	*arg;
 	t_philo	*philo;
-	t_philo	*buffer;
+	t_philo	*head;
 
 	if (ft_parsing(argc, argv))
 		return (0);
@@ -49,22 +61,17 @@ int	main(int argc, char **argv)
 	philo = define_philo(arg);
 	if (!philo)
 		return (free_arg(arg));
-	buffer = philo;
+	head = philo;
 	while (philo)
 	{
-		if (pthread_create(&(philo->thread), NULL, routine_main, philo) != 0)
-		{
-			free_philo(philo, arg);
-			free_arg(arg);
+		if (ft_create_thread(philo, arg))
 			return (0);
-		}
-		if (philo->arg->nb_philo > 1)
-			philo = philo->next;
-		else
+		if (!(philo->arg->nb_philo > 1))
 			break ;
-		usleep(1000);
-		if (philo == buffer)
+		philo = philo->next;
+		usleep(100);
+		if (philo == head)
 			break ;
 	}
-	ft_thread_join(arg, philo, buffer);
+	return (ft_thread_join(arg, philo, head));
 }

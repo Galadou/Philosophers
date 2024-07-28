@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 08:56:16 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 13:34:16 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:04:37 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	ft_am_i_dead(t_philo *philo)
 			+ philo->arg->time_death * 1000))
 	{
 		if (philo->arg->is_someone_died == false)
-		{	
+		{
 			pthread_mutex_lock(&philo->arg->mutex_printf);
 			printf("%ld %d died\n", ((philo->time_now.tv_sec
 						- philo->arg->time_start.tv_sec) * 1000

@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:40:45 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 17:44:36 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:15:11 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_arg
 	int				nb_eat;
 	int				nb_finish_eat;
 	int				is_someone_died;
+	int				fork_reverse;
+	pthread_mutex_t	mutex_reverse;
 	pthread_mutex_t	mutex_finish_eat;
 	pthread_mutex_t	mutex_s_died;
 	pthread_mutex_t	mutex_printf;
@@ -67,6 +69,7 @@ int			free_arg(t_arg *arg);
 
 void		*routine_main(void *philo);
 void		routine_eat(t_philo *philo);
+void		routine_sleep(t_philo *philo);
 bool		ft_am_i_dead(t_philo *philo);
 int			ft_check_dead(t_philo *philo, bool l, bool r);
 

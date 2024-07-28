@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_eat.c                                      :+:      :+:    :+:   */
+/*   ft_routine_eat.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 07:45:26 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 18:27:51 by gmersch          ###   ########.fr       */
+/*   Created: 2024/07/28 21:13:49 by gmersch           #+#    #+#             */
+/*   Updated: 2024/07/28 21:13:51 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,6 @@ static int	ft_check_philo(t_philo *philo, bool l, bool r)
 
 static void	routine_take_fork(t_philo *philo)
 {
-	gettimeofday(&philo->time_last_eat, NULL);
-	philo->nb_eat++;
-	if (philo->arg->is_nb_eat && philo->nb_eat == philo->arg->nb_eat)
-	{
-		pthread_mutex_lock(&philo->arg->mutex_finish_eat);
-		philo->arg->nb_finish_eat++;
-		pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
-	}
-	pthread_mutex_unlock(&philo->mutex_l_fork);
-	pthread_mutex_unlock(philo->mutex_r_fork);
-}
-
-static void	routine_exec(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->arg->mutex_printf);
-	gettimeofday(&philo->time_now, NULL);
-	printf("%ld %d is eating\n", ((philo->time_now.tv_sec
-				- philo->arg->time_start.tv_sec) * 1000
-			+ (philo->time_now.tv_usec - philo->arg->time_start.tv_usec)
-			/ 1000), philo->id);
 	pthread_mutex_unlock(&philo->arg->mutex_printf);
 	if (ft_check_dead(philo, true, true))
 		return ;
@@ -84,11 +64,19 @@ static void	routine_exec(t_philo *philo)
 			return ;
 		gettimeofday(&philo->time_now, NULL);
 	}
-	routine_take_fork(philo);
-	return ;
+	gettimeofday(&philo->time_last_eat, NULL);
+	philo->nb_eat++;
+	if (philo->arg->is_nb_eat && philo->nb_eat == philo->arg->nb_eat)
+	{
+		pthread_mutex_lock(&philo->arg->mutex_finish_eat);
+		philo->arg->nb_finish_eat++;
+		pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
+	}
+	pthread_mutex_unlock(&philo->mutex_l_fork);
+	pthread_mutex_unlock(philo->mutex_r_fork);
 }
 
-void	routine_eat(t_philo *philo)
+static void	routine_exec(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
@@ -108,5 +96,27 @@ void	routine_eat(t_philo *philo)
 		if (ft_check_philo(philo, true, true))
 			return ;
 	}
+	pthread_mutex_lock(&philo->arg->mutex_printf);
+	gettimeofday(&philo->time_now, NULL);
+	printf("%ld %d is eating\n", ((philo->time_now.tv_sec
+				- philo->arg->time_start.tv_sec) * 1000
+			+ (philo->time_now.tv_usec - philo->arg->time_start.tv_usec)
+			/ 1000), philo->id);
+	routine_take_fork(philo);
+}
+
+void	routine_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->arg->mutex_reverse);
+	if (philo->arg->fork_reverse == philo->id)
+	{
+		philo->arg->fork_reverse--;
+		if (philo->arg->fork_reverse == 0)
+			philo->arg->fork_reverse = philo->arg->nb_philo;
+		pthread_mutex_unlock(&philo->arg->mutex_reverse);
+		usleep(500);
+	}
+	else
+		pthread_mutex_unlock(&philo->arg->mutex_reverse);
 	routine_exec(philo);
 }

@@ -6,12 +6,13 @@ NAME		= philo
 
 SRC			=	main.c\
 				ft_atoi.c\
-				define_struct.c\
-				ultimate_free.c\
-				routine.c \
+				ft_define_struct.c\
+				ft_ultimate_free.c\
+				ft_routine.c \
 				ft_philo_dead.c \
-				routine_eat.c \
-				ft_parsing.c
+				ft_routine_eat.c \
+				ft_parsing.c \
+				ft_routine_sleep.c
 
 
 OBJS=$(SRC:.c=.o)

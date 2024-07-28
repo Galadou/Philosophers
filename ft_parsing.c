@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 09:35:50 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 11:43:29 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/28 20:56:30 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int	ft_parsing(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		printf("Error : Too many or too much arg\n");
+		return (1);
+	}
+	if (argc == 6 && ft_atoi(argv[5]) <= 0)
+	{
+		printf("Error : Nb of each philo should eat should be upper than 0\n");
 		return (1);
 	}
 	y = 1;

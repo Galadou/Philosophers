@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   define_struct.c                                    :+:      :+:    :+:   */
+/*   ft_define_struct.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 07:07:17 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 14:35:08 by gmersch          ###   ########.fr       */
+/*   Created: 2024/07/28 21:13:21 by gmersch           #+#    #+#             */
+/*   Updated: 2024/07/28 21:13:23 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_arg	*define_arg(int argc, char **argv)
 		arg->is_nb_eat = false;
 	arg->is_someone_died = 0;
 	arg->nb_finish_eat = 0;
+	arg->fork_reverse = ft_atoi(argv[1]);
+	pthread_mutex_init(&arg->mutex_reverse, NULL);
 	pthread_mutex_init(&arg->mutex_finish_eat, NULL);
 	pthread_mutex_init(&arg->mutex_s_died, NULL);
 	pthread_mutex_init(&arg->mutex_printf, NULL);
