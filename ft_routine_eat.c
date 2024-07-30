@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 21:13:49 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 21:13:51 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:40:12 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_check_dead(t_philo *philo, bool l, bool r)
 {
-	pthread_mutex_lock(&philo->arg->mutex_s_died);
 	pthread_mutex_lock(&philo->arg->mutex_finish_eat);
+	pthread_mutex_lock(&philo->arg->mutex_s_died);
 	if (ft_am_i_dead(philo) || philo->arg->is_someone_died
 		|| (philo->arg->is_nb_eat && philo->arg->nb_finish_eat
 			== philo->arg->nb_philo))
@@ -24,12 +24,12 @@ int	ft_check_dead(t_philo *philo, bool l, bool r)
 			pthread_mutex_unlock(&philo->mutex_l_fork);
 		if (philo->arg->nb_philo > 1 && r)
 			pthread_mutex_unlock(philo->mutex_r_fork);
-		pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
 		pthread_mutex_unlock(&philo->arg->mutex_s_died);
+		pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
 	pthread_mutex_unlock(&philo->arg->mutex_s_died);
+	pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
 	return (0);
 }
 
@@ -38,6 +38,8 @@ static int	ft_check_philo(t_philo *philo, bool l, bool r)
 	if (ft_check_dead(philo, l, r))
 		return (1);
 	pthread_mutex_lock(&philo->arg->mutex_printf);
+	if (ft_check_dead(philo, l, r))
+		return (1);
 	gettimeofday(&philo->time_now, NULL);
 	printf("%ld %d has taken a fork\n", ((philo->time_now.tv_sec
 				- philo->arg->time_start.tv_sec) * 1000
