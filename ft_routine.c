@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 21:14:15 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 21:21:58 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 13:40:24 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	exec_think(t_philo	*philo)
 	}
 	pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
 	pthread_mutex_unlock(&philo->arg->mutex_s_died);
+	usleep(1000);
 	routine_think(philo);
 	pthread_mutex_lock(&philo->arg->mutex_s_died);
 	pthread_mutex_lock(&philo->arg->mutex_finish_eat);

@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:07:27 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 21:11:07 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 13:10:29 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ static int	ft_create_thread(t_philo *philo, t_arg *arg)
 
 static int	ft_thread_join(t_arg *arg, t_philo *philo, t_philo *head)
 {
+	int	error;
+
+	error = 0;
 	philo = head;
 	while (philo->id < arg->nb_philo)
 	{
 		if (pthread_join(philo->thread, NULL) != 0)
 		{
 			printf("Error while joining thread\n");
+			error = 1;
 			break ;
 		}
 		if (philo->arg->nb_philo > 1)
@@ -40,7 +44,8 @@ static int	ft_thread_join(t_arg *arg, t_philo *philo, t_philo *head)
 		if (philo == head)
 			break ;
 	}
-	pthread_join(philo->thread, NULL);
+	if (error == 0 && pthread_join(philo->thread, NULL) != 0)
+		printf("Error while joining thread\n");
 	philo = head;
 	free_philo(philo, arg);
 	free_arg(arg);

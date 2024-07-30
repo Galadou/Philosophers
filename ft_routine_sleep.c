@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 21:12:32 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/28 21:23:06 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 13:40:30 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	print_sleeping(t_philo *philo)
 {
+	usleep(1000);
 	pthread_mutex_lock(&philo->arg->mutex_printf);
 	gettimeofday(&philo->time_now, NULL);
 	printf("%ld %d is sleeping\n", ((philo->time_now.tv_sec
