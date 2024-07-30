@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 21:13:49 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/30 14:40:12 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:47:06 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static int	ft_check_philo(t_philo *philo, bool l, bool r)
 	if (ft_check_dead(philo, l, r))
 		return (1);
 	pthread_mutex_lock(&philo->arg->mutex_printf);
-	if (ft_check_dead(philo, l, r))
-		return (1);
 	gettimeofday(&philo->time_now, NULL);
 	printf("%ld %d has taken a fork\n", ((philo->time_now.tv_sec
 				- philo->arg->time_start.tv_sec) * 1000

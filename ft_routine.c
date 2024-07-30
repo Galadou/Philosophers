@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 21:14:15 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/30 14:51:31 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 16:10:24 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 static int	routine_think(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->arg->mutex_printf);
-	if (ft_check_dead(philo, false, false))
-	{
-		pthread_mutex_unlock(&philo->arg->mutex_printf);
-		return (1);
-	}
 	gettimeofday(&philo->time_now, NULL);
 	printf("%ld %d is thinking\n", ((philo->time_now.tv_sec
 				- philo->arg->time_start.tv_sec) * 1000
@@ -40,9 +35,7 @@ static int	exec_think(t_philo	*philo)
 	}
 	pthread_mutex_unlock(&philo->arg->mutex_s_died);
 	pthread_mutex_unlock(&philo->arg->mutex_finish_eat);
-	//usleep(1000);
-	if (routine_think(philo))
-		return (1);
+	routine_think(philo);
 	pthread_mutex_lock(&philo->arg->mutex_finish_eat);
 	pthread_mutex_lock(&philo->arg->mutex_s_died);
 	if (philo->arg->is_someone_died || (philo->arg->is_nb_eat
@@ -74,6 +67,7 @@ static int	routine_exec(t_philo *philo)
 	routine_sleep(philo);
 	pthread_mutex_lock(&philo->arg->mutex_finish_eat);
 	pthread_mutex_lock(&philo->arg->mutex_s_died);
+	usleep(1000);
 	if (exec_think(philo))
 		return (1);
 	return (0);

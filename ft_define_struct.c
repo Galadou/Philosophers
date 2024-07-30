@@ -6,7 +6,7 @@
 /*   By: gmersch <gmersch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 21:13:21 by gmersch           #+#    #+#             */
-/*   Updated: 2024/07/30 14:31:43 by gmersch          ###   ########.fr       */
+/*   Updated: 2024/07/30 16:20:59 by gmersch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_arg	*define_arg(int argc, char **argv)
 	t_arg	*arg;
 
 	arg = malloc(sizeof(t_arg));
+	if (!arg)
+		return (NULL);
 	gettimeofday(&arg->time_start, NULL);
 	arg->nb_philo = ft_atoi(argv[1]);
 	arg->time_death = ft_atoi(argv[2]);
